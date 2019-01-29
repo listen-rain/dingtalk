@@ -20,7 +20,7 @@ composer require listen/dingtalk
 
 在config/app.php 'providers' 中添加 
 ```
-\Qian\DingTalk\DingTalkServiceProvider::class,
+\Listen\DingTalk\DingTalkServiceProvider::class,
 ```
    
 ###  3、生成配置文件 config/dingtalk.php

@@ -22,7 +22,12 @@ composer require listen/dingtalk
 ```
 \Listen\DingTalk\DingTalkServiceProvider::class,
 ```
-   
+
+在config/app.php 'aliases' 中添加
+```
+'DingTalk' => Listen\DingTalk\Facades\DingTalk::class,
+```
+
 ###  3、生成配置文件 config/dingtalk.php
 
 ```

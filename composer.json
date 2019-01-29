@@ -1,5 +1,6 @@
 {
     "name": "listen/dingtalk",
+    "version": "1.0.1",
     "description": "Dingtalk Package For Laravel5 Only",
     "type": "library",
     "license": "MIT",

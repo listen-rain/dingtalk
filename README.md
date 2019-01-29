@@ -72,6 +72,11 @@ $message = app('message')->markdown('test', "laravel error");
 app('dingtalk')->send($message);
 ```
 
+### 使用帮助函数
+```
+sendByDingtalk('test message', 'test');
+```
+
 ### 联系我
 
 邮箱：zhufengwei@aliyun.com

@@ -13,7 +13,10 @@
     "autoload": {
         "psr-4": {
             "Listen\\DingTalk\\": "src/"
-        }
+        },
+        "files": [
+            "src/helpers.php"
+        ]
     },
     "minimum-stability": "stable",
     "require": {

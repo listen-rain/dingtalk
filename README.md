@@ -1,4 +1,7 @@
-# laravel-DingTalk是基于laravel5.5开发的钉钉机器人
+# dingtalk 是基于 laravel5.5 开发的钉钉机器人扩展包
+
+> 仅支持 Laravel 5 框架
+
 ```
 当前自定义机器人支持
 文本（text）、链接（link）、markdown（markdown）三种消息类型
@@ -6,45 +9,46 @@
 ```
 
 # 安装方法
+
 ### 1、安装
+
 ```
-    composer require WXiangQian/laravel-DingTalk    
-    composer install
-```   
-或
-```  
-    composer.json 中添加 "WXiangQian/laravel-DingTalk": "^1.0"  
-    composer update 
+composer require listen/dingtalk
 ```
-1.0为版本号，可替换
-如果无法安装 请执行一下 composer update nothing 然后 composer update
- 
  
 ###  2、配置app.php
 
 在config/app.php 'providers' 中添加 
 ```
-\Qian\DingTalk\DingTalkServiceProvider::class
+\Qian\DingTalk\DingTalkServiceProvider::class,
 ```
    
-###  3、执行命令生成配置文件
+###  3、生成配置文件 config/dingtalk.php
 
 ```
-   php artisan vendor:publish 
+php artisan vendor:publish 
 ```
+
+# 使用
+
+### 实例化
 ```
-   则生成 config/dingtalk.php
+$message = app('message')
+或
+$message = app(Listen\DingTalk\Message::class)
+
+$dingtalk = app('dingtalk')
+或
+$dingtalk = app(Listen\DingTalk\DingTalk::class)
 ```
-# 实例
 
 ### 实现Text发送
+
 ```
-$DingTalk = new DingTalk();
-$message = new Message();
-$data = $message->text('测试text类型');
-$res = $DingTalk->send($data);
-echo $res;
+$message = app('message')->text("laravel error");
+app('dingtalk')->send($message);
 ```
+
 ### 实现Link发送
 ```
 $DingTalk = new DingTalk();
@@ -54,17 +58,16 @@ $text = '测试link类型text';
 $messageUrl = 'https://www.baidu.com/';
 $picUrl = '';
 $data = $message->link($title, $text, $messageUrl, $picUrl);
-$res = $DingTalk->send($data);
-echo $res;
+$DingTalk->send($data);
 ```
+
 ### 实现Markdown发送
 ```
-$DingTalk = new DingTalk();
-$message = new Message();
-$title = '北京天气MD';
-$text = '# laravel-DingTalk是基于laravel5.5开发的钉钉机器人';
-$data = $message->markdown($title, $text);
-$res = $DingTalk->send($data);
-echo $res;
+$message = app('message')->markdown('test', "laravel error");
+app('dingtalk')->send($message);
 ```
-####  如满足您的需求，请留下来点个赞吧
+
+### 联系我
+
+邮箱：zhufengwei@aliyun.com
+微信：w15275049388

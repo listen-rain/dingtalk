@@ -1,17 +1,17 @@
 {
-    "name": "wxiangqian/laravel-DingTalk",
-    "description": "This package makes it easy to send notifications using DingTalk Bot",
+    "name": "listen/dingtalk",
+    "description": "Dingtalk Package For Laravel5 Only",
     "type": "library",
     "license": "MIT",
     "authors": [
         {
-            "name": "xiangqian",
-            "email": "175023117@qq.com"
+            "name": "zhufengwei",
+            "email": "zhufengwei@aliyun.com"
         }
     ],
     "autoload": {
         "psr-4": {
-            "Qian\\DingTalk\\": "src/"
+            "Listen\\DingTalk\\": "src/"
         }
     },
     "minimum-stability": "stable",

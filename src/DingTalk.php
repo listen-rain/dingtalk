@@ -1,75 +1,83 @@
 <?php
-namespace Qian\DingTalk;
 
+namespace Listen\DingTalk;
+
+use Listen\DingTalk\Exceptions\DingTalkException;
 
 class DingTalk
 {
+    /**
+     * @var string
+     */
+    private $domain = '';
 
-    public function tokenIsRequired()
+    /**
+     * @var array
+     */
+    private $headers = [];
+
+    /**
+     * DingTalk constructor.
+     */
+    public function __construct()
     {
-        return 'Token is not found';
-    }
-    public function responseError($code, $message)
-    {
-        return 'Status Code: ' . $code . 'Error Message: ' . $message;
-    }
-
-
-    public function send($res)
-    {
-        if (empty(config('dingtalk.talk.token')))
-        {
-            return $this->tokenIsRequired();
-        }
-        $url = 'https://oapi.dingtalk.com/robot/send?access_token=' . config('dingtalk.talk.token');
-        $body = $this->buildRequestPayload($res);
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array ('Content-Type: application/json;charset=utf-8'));
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $body);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt ($ch, CURLOPT_SSL_VERIFYHOST, 0);
-        curl_setopt ($ch, CURLOPT_SSL_VERIFYPEER, 0);
-        $resp = curl_exec($ch);
-        curl_close($ch);
-        $data = json_decode($resp);
-
-        if ($data->errcode != 0)
-        {
-            return $this->responseError($data->errcode, $data->errmsg);
-        }
-
-        return 'Success';
+        $this->domain  = config('dingtalk.domain') ?: 'https://oapi.dingtalk.com/robot/send?access_token=' . config('dingtalk.token');
+        $this->headers = ['Content-Type: application/json;charset=utf-8'];
     }
 
-    public function buildRequestPayload(Message $message)
+    /**
+     * @date   2019/1/29
+     * @author <zhufengwei@aliyun.com>
+     *
+     * @param array $headers
+     *
+     * @return $this
+     */
+    public function setHeaders(array $headers)
     {
-        $data = [];
-        switch ($message->getMsgType())
-        {
-            case 'text':
-                $data['msgtype'] = 'text';
-                $data['text']['content'] = $message->content;
-                break;
-            case 'link':
-                $data['msgtype'] = 'link';
-                $data['link'] = $message->content;
-                break;
-            case 'markdown':
-                $data['msgtype'] = 'markdown';
-                $data['markdown'] = $message->content;
-                break;
-            case 'actionCard':
-                $data['msgtype'] = 'actionCard';
-                $data['actionCard'] = $message->content;
-                break;
-            case 'feedCard':
-                $data['msgtype']  = 'feedCard';
-                $data['feedCard'] = $message->content;
-                break;
+        $this->headers = $headers;
+
+        return $this;
+    }
+
+    /**
+     * @date   2019/1/29
+     * @author <zhufengwei@aliyun.com>
+     * @param \Listen\DingTalk\Message $message
+     *
+     * @return bool
+     * @throws \Listen\DingTalk\Exceptions\DingTalkException
+     */
+    public function send(Message $message)
+    {
+        if (!$this->domain) {
+            throw new DingTalkException('Token\'s Empty!', 901001);
         }
-        return json_encode($data);
+
+        $body = $message->buildRequestPayload();
+
+        try {
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $this->domain);
+            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $this->headers);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $body);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+            $resp = curl_exec($ch);
+            curl_close($ch);
+
+            $data = json_decode($resp);
+            if ($data->errcode === 0) {
+                return true;
+            }
+
+            throw new DingTalkException($data->errmsg, $data->errcode);
+
+        } catch (DingTalkException $e) {
+            throw $e;
+        }
     }
 }

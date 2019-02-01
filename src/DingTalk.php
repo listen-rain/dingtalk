@@ -70,6 +70,11 @@ class DingTalk
             curl_close($ch);
 
             $data = json_decode($resp);
+
+            if (!$data) {
+                throw new DingTalkException('Request Error! Please Check Your DingTalk Config!');
+            }
+
             if ($data->errcode === 0) {
                 return true;
             }

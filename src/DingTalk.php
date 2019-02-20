@@ -43,6 +43,7 @@ class DingTalk
     /**
      * @date   2019/1/29
      * @author <zhufengwei@aliyun.com>
+     *
      * @param \Listen\DingTalk\Message $message
      *
      * @return bool
@@ -51,7 +52,9 @@ class DingTalk
     public function send(Message $message)
     {
         if (!$this->domain) {
-            throw new DingTalkException('Token\'s Empty!', 901001);
+            // throw new DingTalkException('Token\'s Empty!', 901001);
+            \Log::error('dingtalk', ['Token\'s Empty!']);
+            return false;
         }
 
         $body = $message->buildRequestPayload();
@@ -72,17 +75,24 @@ class DingTalk
             $data = json_decode($resp);
 
             if (!$data) {
-                throw new DingTalkException('Request Error! Please Check Your DingTalk Config!');
+                // throw new DingTalkException('Request Error! Please Check Your DingTalk Config!');
+                \Log::error('dingtalk', ['Request Error! Please Check Your DingTalk Config!']);
+                return false;
             }
 
             if ($data->errcode === 0) {
                 return true;
             }
 
-            throw new DingTalkException($data->errmsg, $data->errcode);
+            // throw new DingTalkException($data->errmsg, $data->errcode);
+            \Log::error('dingtalk', [$data->errmsg, $data->errcode]);
+            return false;
 
         } catch (DingTalkException $e) {
-            throw $e;
+            // throw $e;
+            \Log::error('dingtalk', [$e->getMessage(), $e->getCode()]);
+            return false;
         }
     }
 }
+

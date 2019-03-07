@@ -2,12 +2,6 @@
 
 > 仅支持 Laravel 5 框架
 
-```
-当前自定义机器人支持
-文本（text）、链接（link）、markdown（markdown）三种消息类型
-大家可以根据自己的使用场景选择合适的消息类型，达到最好的展示样式
-```
-
 [![Latest Stable Version](https://poser.pugx.org/listen/dingtalk/v/stable)](https://packagist.org/packages/listen/dingtalk)
 [![Total Downloads](https://poser.pugx.org/listen/dingtalk/downloads)](https://packagist.org/packages/listen/dingtalk)
 [![Latest Unstable Version](https://poser.pugx.org/listen/dingtalk/v/unstable)](https://packagist.org/packages/listen/dingtalk)
@@ -15,6 +9,12 @@
 [![Monthly Downloads](https://poser.pugx.org/listen/dingtalk/d/monthly)](https://packagist.org/packages/listen/dingtalk)
 [![Daily Downloads](https://poser.pugx.org/listen/dingtalk/d/daily)](https://packagist.org/packages/listen/dingtalk)
 [![composer.lock](https://poser.pugx.org/listen/dingtalk/composerlock)](https://packagist.org/packages/listen/dingtalk)
+
+```
+当前自定义机器人支持
+文本（text）、链接（link）、markdown（markdown）三种消息类型
+大家可以根据自己的使用场景选择合适的消息类型，达到最好的展示样式
+```
 
 # 安装方法
 

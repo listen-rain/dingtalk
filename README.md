@@ -85,7 +85,7 @@ app('dingtalk')->send($message);
 sendByDingtalk('test message', 'test');
 ```
 
-### 联系我
+### 联系
 
 邮箱：zhufengwei@aliyun.com
 

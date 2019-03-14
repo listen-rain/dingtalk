@@ -39,7 +39,7 @@ composer require listen/dingtalk
 ###  3、生成配置文件 config/dingtalk.php
 
 ```
-php artisan vendor:publish 
+php artisan vendor:publish --provider='Listen\DingTalk\Providers\DingTalkServiceProvider'
 ```
 
 # 使用

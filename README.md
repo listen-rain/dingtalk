@@ -46,8 +46,14 @@ php artisan vendor:publish --provider='Listen\DingTalk\Providers\DingTalkService
 
 ```
 return [
+    // 配置 domain 后，token 课为空
+    // .env 示例 DING_TOKEN=2d5exxxx3fd30b863bf53150b82caeb2d5eae1c32a6378d375b9875a1dbadxxx
     'token' => env('DING_TOKEN', ''),  // token
-    'domain' => env('DING_DOMAIN', ''), // 配置token后，domain 可以为空
+    
+    // 配置token后，domain 可以为空
+    // .env 配置示例：DING_DOMAIN=https://oapi.dingtalk.com/robot/send?access_token=2d5exxxx3fd30b863bf53150b82caeb2d5eae1c32a6378d375b9875a1dbadxxx
+    'domain' => env('DING_DOMAIN', ''), 
+    
     'atMobiles' => [] // @ 的人员
 ];
 ```

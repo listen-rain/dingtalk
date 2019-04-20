@@ -42,6 +42,16 @@ composer require listen/dingtalk
 php artisan vendor:publish --provider='Listen\DingTalk\Providers\DingTalkServiceProvider'
 ```
 
+### 配置
+
+```
+return [
+    'token' => env('DING_TOKEN', ''),  // token
+    'domain' => env('DING_DOMAIN', ''), // 配置token后，domain 可以为空
+    'atMobiles' => [] // @ 的人员
+];
+```
+
 # 使用
 
 ### 实例化
